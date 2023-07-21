@@ -54,8 +54,8 @@ public class Enemy_2 : MonoBehaviour
     {
         if (other.tag == "Core")
         {
-            //플레이어 HP 감소
             Destroy(gameObject);
+            GameManager.instance.CoreHpUi(1);
         }
     }
 
