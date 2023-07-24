@@ -9,9 +9,11 @@ public class GameManager : MonoBehaviour
 {
     public bool isGameOver = false;
 
-    public TMP_Text CoreHP;
+    public TMP_Text CoreHP; 
+    public TMP_Text Money;
     public static GameManager instance;
     private int coreHP = 30;
+    private int money = 500;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,5 +38,15 @@ public class GameManager : MonoBehaviour
             CoreHP.text = string.Format("CORE : {0}", coreHP);
             Debug.Log(coreHP);
         }
-    }   
+    }
+    public void AddMoney(int newScore)
+    {
+
+        if (isGameOver == false)
+        {
+            money += newScore;
+            Money.text = string.Format("Score : {0}", money);
+            Debug.Log(money);
+        }
+    }
 }

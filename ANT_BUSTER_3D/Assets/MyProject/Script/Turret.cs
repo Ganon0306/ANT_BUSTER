@@ -8,47 +8,97 @@ public class Turret : MonoBehaviour
     Turret_Rotater rotater = new Turret_Rotater();
 
     public GameObject bulletPrefab = default;
-    public float spawnRateMin = 0.5f;
-    public float spawnRateMax = 3f;
-
     public Transform bulletPool = default;
-    private Transform target = default;
-    private float spawnRate = default;
-    private float timeAfterSpawn = default;
 
+    private Transform target = default;
+    private float spawnRate = 1;      //공속
+    private float timeAfterSpawn = default;
     public int turretAtk = 1;
 
     // Start is called before the first frame update
     void Start()
     {
         timeAfterSpawn = 0f;
-        spawnRate = Random.Range(spawnRateMin, spawnRateMax);
-        target = FindObjectOfType<EnemyManager>().transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        timeAfterSpawn += Time.deltaTime;
+        GameObject[] enemyObjects = GameObject.FindGameObjectsWithTag("Enemy");
 
-        float distance = Vector3.Distance(transform.position, target.position);
-
-        if (distance < 10)
+        if (enemyObjects.Length > 0)
         {
-            if (spawnRate <= timeAfterSpawn)
+            // 모든 적들 중 가장 가까운 적 찾기
+            float closestDistance = Mathf.Infinity;
+            GameObject closestEnemy = null;
+
+            foreach (GameObject enemyObject in enemyObjects)
             {
-                timeAfterSpawn = 0;
-                transform.LookAt(target);
+                float aaa = Vector3.Distance(transform.position, enemyObject.transform.position);
+                if (aaa < closestDistance)
+                {
+                    closestDistance = aaa;
+                    closestEnemy = enemyObject;
+                }
+            }
+            if (closestEnemy != null) 
+            {
+                target = closestEnemy.transform;
+            }
+        }
+        else
+        {
+            target = null;
+        }
 
-                GameObject bullet = Instantiate(bulletPrefab,
-                    transform.position, transform.rotation, bulletPool);
+        if (target != null)
+        {
+            timeAfterSpawn += Time.deltaTime;
+            float aaa = Vector3.Distance(transform.position, target.position);
 
-                spawnRate = Random.Range(spawnRateMin, spawnRateMax);
+            if (aaa < 7)
+            {
+                if (timeAfterSpawn >= spawnRate)
+                {
+                    timeAfterSpawn = 0;
+                    transform.LookAt(target);
+                    Vector3 bulletSpawnPosition = transform.position + Vector3.up * 0.8f;
+                    GameObject bullet = Instantiate(bulletPrefab,
+                        bulletSpawnPosition, transform.rotation, bulletPool);
+                }
+            }
+            else
+            {
+                rotater.Run(transform);
             }
         }
         else
         {
             rotater.Run(transform);
         }
+        //if (enemyObject != null)
+        //{
+        //    target = enemyObject.transform;
+        //}
+        
+        //timeAfterSpawn += Time.deltaTime;
+
+        //float distance = Vector3.Distance(transform.position, target.position);
+
+        //if (distance < 7)
+        //{
+        //    if (timeAfterSpawn >= spawnRate)
+        //    {
+        //        timeAfterSpawn = 0;
+        //        transform.LookAt(target);
+
+        //        GameObject bullet = Instantiate(bulletPrefab,
+        //            transform.position, transform.rotation, bulletPool);                
+        //    }
+        //}
+        //else
+        //{
+        //    rotater.Run(transform);
+        //}
     }
 }

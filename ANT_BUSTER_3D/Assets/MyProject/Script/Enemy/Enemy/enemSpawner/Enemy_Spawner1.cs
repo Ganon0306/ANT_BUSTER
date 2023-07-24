@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
-using UnityEngine.UIElements;
 
 public class Enemy_Spawner1 : MonoBehaviour
 {
+
     public GameObject enemyPrefab = default;
     public float spawnRateMin = 0.5f;
     public float spawnRateMax = 3f;

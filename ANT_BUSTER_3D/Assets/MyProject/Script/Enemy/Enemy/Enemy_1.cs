@@ -38,6 +38,8 @@ public class Enemy_1 : MonoBehaviour
         if (enemyHP <= 0)
         {
             Destroy(gameObject);
+
+            //GameManager.instance.AddMoney(1);
         }
 
         if (wayPoint.Length == 0)
@@ -61,11 +63,15 @@ public class Enemy_1 : MonoBehaviour
     {
         if (collision.tag.Equals("Core"))
         {
-            Destroy(gameObject); 
-           
-            GameManager.instance.CoreHpUi(1);
-           
-        }
-    }
+            Destroy(gameObject);
 
+            GameManager.instance.CoreHpUi(1);
+
+        }
+        //if (collision.tag.Equals("Bullet"))
+        //{
+        //    enemy
+        //}
+
+    }
 }

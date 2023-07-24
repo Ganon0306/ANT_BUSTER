@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Turret_Bullet : MonoBehaviour
 {
-    public float speed = 8f;
+    public float speed = 10f;
     private Rigidbody rigid = default;
     // Start is called before the first frame update
     void Start()
@@ -19,7 +19,7 @@ public class Turret_Bullet : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy")
+        if (other.tag.Equals("Enemy"))
         {
             EnemyManager enemy = other.GetComponent<EnemyManager>();
             if (enemy != null)

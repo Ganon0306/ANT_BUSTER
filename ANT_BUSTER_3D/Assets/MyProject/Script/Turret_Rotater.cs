@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Turret_Rotater : MonoBehaviour
 {
-    public float rotationSpeed = 60f;
+    public float rotationSpeed = 80f;
 
     // Start is called before the first frame update
     void Start()
