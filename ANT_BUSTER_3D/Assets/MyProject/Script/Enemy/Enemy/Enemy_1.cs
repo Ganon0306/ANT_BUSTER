@@ -57,12 +57,14 @@ public class Enemy_1 : MonoBehaviour
         }
 
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collision)
     {
-        if (other.tag == "Core")
+        if (collision.tag.Equals("Core"))
         {
-            Destroy(gameObject);
+            Destroy(gameObject); 
+           
             GameManager.instance.CoreHpUi(1);
+           
         }
     }
 

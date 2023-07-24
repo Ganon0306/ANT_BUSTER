@@ -26,6 +26,7 @@ public class Enemy_3 : MonoBehaviour
 
     void Update()
     {
+        
         EnemyManager enemyManager = new EnemyManager();
         int enemyHP = enemyManager.enemyHP;
         if (enemyHP <= 0)
@@ -50,9 +51,9 @@ public class Enemy_3 : MonoBehaviour
         }
 
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collision)
     {
-        if (other.tag == "Core")
+        if (collision.tag.Equals("Core"))
         {
             Destroy(gameObject);
             GameManager.instance.CoreHpUi(1);

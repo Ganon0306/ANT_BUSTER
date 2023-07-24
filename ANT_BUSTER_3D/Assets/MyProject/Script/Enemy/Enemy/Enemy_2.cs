@@ -50,9 +50,9 @@ public class Enemy_2 : MonoBehaviour
         }
 
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collision)
     {
-        if (other.tag == "Core")
+        if (collision.tag.Equals("Core"))
         {
             Destroy(gameObject);
             GameManager.instance.CoreHpUi(1);
