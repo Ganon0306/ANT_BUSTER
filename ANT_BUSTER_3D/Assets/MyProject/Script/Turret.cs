@@ -11,7 +11,7 @@ public class Turret : MonoBehaviour
     public Transform bulletPool = default;
 
     private Transform target = default;
-    private float spawnRate = 1;      //공속
+    private float spawnRate = 1f;      //공속
     private float timeAfterSpawn = default;
     public int turretAtk = 1;
 
@@ -76,29 +76,6 @@ public class Turret : MonoBehaviour
         {
             rotater.Run(transform);
         }
-        //if (enemyObject != null)
-        //{
-        //    target = enemyObject.transform;
-        //}
-        
-        //timeAfterSpawn += Time.deltaTime;
-
-        //float distance = Vector3.Distance(transform.position, target.position);
-
-        //if (distance < 7)
-        //{
-        //    if (timeAfterSpawn >= spawnRate)
-        //    {
-        //        timeAfterSpawn = 0;
-        //        transform.LookAt(target);
-
-        //        GameObject bullet = Instantiate(bulletPrefab,
-        //            transform.position, transform.rotation, bulletPool);                
-        //    }
-        //}
-        //else
-        //{
-        //    rotater.Run(transform);
-        //}
+      
     }
 }

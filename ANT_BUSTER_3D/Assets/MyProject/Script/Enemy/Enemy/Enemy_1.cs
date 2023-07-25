@@ -8,10 +8,15 @@ public class Enemy_1 : MonoBehaviour
     public Vector3[] wayPoint;
     public float speed = 3f;
     private int wayPointIndex = 0;
+    public int enemyHP;
+    private int turretAtk;
+    EnemyManager enemyManager = new EnemyManager();
+    Turret_Bullet bullet = new Turret_Bullet();
+
 
     private void Start()
     {
-
+        enemyHP = 8 + (enemyManager.killCount)/5 ;
         wayPoint = new Vector3[]
         {
             new Vector3(-11.5f, transform.position.y, 7.5f),
@@ -26,20 +31,21 @@ public class Enemy_1 : MonoBehaviour
             new Vector3(-12f, transform.position.y, 0.25f),
             new Vector3(-12f, transform.position.y, -3.5f),
             new Vector3(-5f, transform.position.y, -3.5f),
-            new Vector3(-5f, transform.position.y, -0.5f),
-            new Vector3(0f, transform.position.y, -0.5f)
+            new Vector3(-5f, transform.position.y, 0f),
+            new Vector3(0f, transform.position.y, 0f)
         };
     }
 
     void Update()
     {
-        EnemyManager enemyManager = new EnemyManager();
-        int enemyHP = enemyManager.enemyHP;
+        turretAtk = Turret_Bullet.atk;
+
         if (enemyHP <= 0)
         {
+            enemyManager.killCount += 1;
             Destroy(gameObject);
 
-            //GameManager.instance.AddMoney(1);
+            GameManager.instance.AddMoney(enemyHP * 5);
         }
 
         if (wayPoint.Length == 0)
@@ -61,6 +67,7 @@ public class Enemy_1 : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
+
         if (collision.tag.Equals("Core"))
         {
             Destroy(gameObject);
@@ -68,10 +75,13 @@ public class Enemy_1 : MonoBehaviour
             GameManager.instance.CoreHpUi(1);
 
         }
-        //if (collision.tag.Equals("Bullet"))
-        //{
-        //    enemy
-        //}
+        if (collision.tag.Equals("Bullet"))
+        {
+            Destroy(collision.gameObject);
+            Debug.LogFormat("{0}", enemyHP);
+            enemyHP -= turretAtk;
+        }
 
     }
+
 }

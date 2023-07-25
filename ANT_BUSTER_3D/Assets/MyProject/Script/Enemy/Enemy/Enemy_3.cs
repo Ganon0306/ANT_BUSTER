@@ -7,6 +7,8 @@ public class Enemy_3 : MonoBehaviour
     public Vector3[] wayPoint;
     public float speed = 3f;
     private int wayPointIndex = 0;
+    private int enemyHP;
+    private int turretAtk;
 
     private void Start()
     {
@@ -28,7 +30,7 @@ public class Enemy_3 : MonoBehaviour
     {
         
         EnemyManager enemyManager = new EnemyManager();
-        int enemyHP = enemyManager.enemyHP;
+        enemyHP = 4 + (enemyManager.killCount) / 5;
         if (enemyHP <= 0)
         {
             Destroy(gameObject);
@@ -57,6 +59,10 @@ public class Enemy_3 : MonoBehaviour
         {
             Destroy(gameObject);
             GameManager.instance.CoreHpUi(1);
+        }
+        if (collision.tag.Equals("Bullet"))
+        {
+            enemyHP -= turretAtk;
         }
     }
 

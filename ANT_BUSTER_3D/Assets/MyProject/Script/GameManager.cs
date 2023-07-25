@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     private int coreHP = 30;
     private int money = 500;
+
+    private float time;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +26,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        time = Time.deltaTime;
+
         //Debug.LogFormat("{0}", coreHP);
         if (coreHP <= 0)
         {
@@ -39,13 +44,13 @@ public class GameManager : MonoBehaviour
             Debug.Log(coreHP);
         }
     }
-    public void AddMoney(int newScore)
+    public void AddMoney(int newMoney)
     {
 
         if (isGameOver == false)
         {
-            money += newScore;
-            Money.text = string.Format("Score : {0}", money);
+            money += newMoney;
+            Money.text = string.Format("MONEY : {0}", money);
             Debug.Log(money);
         }
     }

@@ -6,6 +6,10 @@ public class Turret_Bullet : MonoBehaviour
 {
     public float speed = 10f;
     private Rigidbody rigid = default;
+    public static int atk;
+    Turret turret = new Turret();
+
+    public int a;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,20 +17,18 @@ public class Turret_Bullet : MonoBehaviour
         rigid.velocity = transform.forward * speed;
 
         Destroy(gameObject, 3.0f);
-
     }
 
-
-    void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        if (other.tag.Equals("Enemy"))
-        {
-            EnemyManager enemy = other.GetComponent<EnemyManager>();
-            if (enemy != null)
-            {
-                enemy.Damage();
-            }
-            Destroy(gameObject);
-        }
+        atk = turret.turretAtk;
     }
+
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.tag.Equals("Enemy"))
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //}
 }
