@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy_3 : MonoBehaviour
@@ -7,11 +8,15 @@ public class Enemy_3 : MonoBehaviour
     public Vector3[] wayPoint;
     public float speed = 3f;
     private int wayPointIndex = 0;
-    private int enemyHP;
+    public int enemyHP;
     private int turretAtk;
+    EnemyManager enemyManager = new EnemyManager();
+    GameManager gameManager = new GameManager();
+    Turret_Bullet bullet = new Turret_Bullet();
 
     private void Start()
     {
+        enemyHP = 4 + (GameManager.instance.killCount) / 5;
 
         wayPoint = new Vector3[]
         {
@@ -28,13 +33,10 @@ public class Enemy_3 : MonoBehaviour
 
     void Update()
     {
-        
-        EnemyManager enemyManager = new EnemyManager();
-        enemyHP = 4 + (enemyManager.killCount) / 5;
-        if (enemyHP <= 0)
-        {
-            Destroy(gameObject);
-        }
+
+        turretAtk = Turret_Bullet.atk;
+
+       
 
         if (wayPoint.Length == 0)
             return;
@@ -55,15 +57,28 @@ public class Enemy_3 : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
+
         if (collision.tag.Equals("Core"))
         {
             Destroy(gameObject);
+
             GameManager.instance.CoreHpUi(1);
+
         }
         if (collision.tag.Equals("Bullet"))
         {
+            Destroy(collision.gameObject);
+            Debug.LogFormat("{0}", enemyHP);
             enemyHP -= turretAtk;
+            if (enemyHP <= 0)
+            {
+                GameManager.instance.AddKill(1);
+                Destroy(gameObject);
+
+                GameManager.instance.AddMoney(enemyHP * 3);
+            }
         }
+
     }
 
 }

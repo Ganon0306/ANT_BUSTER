@@ -11,9 +11,13 @@ public class GameManager : MonoBehaviour
 
     public TMP_Text CoreHP; 
     public TMP_Text Money;
+    public TMP_Text Kill_;
+
     public static GameManager instance;
     private int coreHP = 30;
-    private int money = 500;
+    public int money = 500;
+    private int kill = 0;
+    public int killCount = 0;
 
     private float time;
 
@@ -26,6 +30,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        kill = killCount;
         time = Time.deltaTime;
 
         //Debug.LogFormat("{0}", coreHP);
@@ -52,6 +57,16 @@ public class GameManager : MonoBehaviour
             money += newMoney;
             Money.text = string.Format("MONEY : {0}", money);
             Debug.Log(money);
+        }
+    }
+
+    public void AddKill(int newKill)
+    {
+        if (isGameOver == false)
+        {
+            killCount += newKill;
+            Kill_.text = string.Format("KILL : {0}", killCount);
+            Debug.Log(killCount);
         }
     }
 }

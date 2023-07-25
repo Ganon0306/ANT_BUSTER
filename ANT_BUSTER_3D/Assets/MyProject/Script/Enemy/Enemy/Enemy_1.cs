@@ -11,12 +11,13 @@ public class Enemy_1 : MonoBehaviour
     public int enemyHP;
     private int turretAtk;
     EnemyManager enemyManager = new EnemyManager();
+    GameManager gameManager = new GameManager();
     Turret_Bullet bullet = new Turret_Bullet();
 
 
     private void Start()
     {
-        enemyHP = 8 + (enemyManager.killCount)/5 ;
+        enemyHP = 4 + (GameManager.instance.killCount)/5 ;
         wayPoint = new Vector3[]
         {
             new Vector3(-11.5f, transform.position.y, 7.5f),
@@ -40,13 +41,7 @@ public class Enemy_1 : MonoBehaviour
     {
         turretAtk = Turret_Bullet.atk;
 
-        if (enemyHP <= 0)
-        {
-            enemyManager.killCount += 1;
-            Destroy(gameObject);
-
-            GameManager.instance.AddMoney(enemyHP * 5);
-        }
+        
 
         if (wayPoint.Length == 0)
             return;
@@ -80,6 +75,14 @@ public class Enemy_1 : MonoBehaviour
             Destroy(collision.gameObject);
             Debug.LogFormat("{0}", enemyHP);
             enemyHP -= turretAtk;
+
+            if (enemyHP <= 0)
+            {
+                GameManager.instance.AddKill(1);
+                Destroy(gameObject);
+
+                GameManager.instance.AddMoney(enemyHP * 3);
+            }
         }
 
     }

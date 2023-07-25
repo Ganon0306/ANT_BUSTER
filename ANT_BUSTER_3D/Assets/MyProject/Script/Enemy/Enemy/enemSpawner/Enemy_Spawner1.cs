@@ -20,7 +20,7 @@ public class Enemy_Spawner1 : MonoBehaviour
         timeAfterSpawn += Time.deltaTime;
 
         //if (spawnRate <= timeAfterSpawn)
-        if (timeAfterSpawn >= 1)
+        if (timeAfterSpawn >= 3)
         {
             timeAfterSpawn = 0;
             // transform.LookAt(target);

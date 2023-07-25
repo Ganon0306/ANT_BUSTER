@@ -17,7 +17,8 @@ public class Lay_Turret : MonoBehaviour
     public void OnButtonPressed()
     {
         // 버튼을 누를 때 프리팹을 마우스 위치에 생성
-        if (prefabToInstantiate != null)
+        int currentMoney = GameManager.instance.money;
+        if (prefabToInstantiate != null && currentMoney >= 50)
         {
             Vector3 screenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f); // 적절한 z값 설정
             Vector3 worldPoint = Camera.main.ScreenToWorldPoint(screenPoint);
@@ -25,6 +26,8 @@ public class Lay_Turret : MonoBehaviour
             worldPoint.x *= 2.3f;
             worldPoint.z *= 2.3f;
             instantiatedObject = Instantiate(prefabToInstantiate, worldPoint, Quaternion.identity);
+
+            GameManager.instance.money -= 50;
         }
     }
 
